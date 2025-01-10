@@ -1,3 +1,6 @@
+import com.example.myapplication_test.UpdateType
+import com.example.myapplication_test.VersionManager
+
 fun main() {
     val b = VersionManager("3.2.3")
 

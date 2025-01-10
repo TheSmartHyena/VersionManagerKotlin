@@ -1,24 +1,32 @@
+package com.example.myapplication_test
+
 import kotlin.math.min
 
 enum class UpdateType {
     PATCH, MINOR, MAJOR
 }
 
-class VersionManager {
+const val DEFAULT_VERSION = "1.O.0"
+
+class VersionManager() {
+    private var initialVersion = ""
     private val versions: MutableList<String> = ArrayList()
 
-    constructor() {
-        this.versions.add("0.0.1")
+    init {
+        this.versions.add(DEFAULT_VERSION)
+        this.initialVersion = DEFAULT_VERSION
     }
 
-    constructor(version: String) {
+    constructor(version: String) : this() {
+        this.initialVersion = version
+
         val splitted = version.split(".")
         val result = arrayOfNulls<String>(3)
 
-        val indexMax = min(splitted.size.toDouble(), 3.0).toInt()
+        val indexMax = min(splitted.size.toDouble(), 2.0).toInt()
         val indexMin = splitted.size
 
-        for (i in 0..<indexMax) {
+        for (i in 0..indexMax) {
             result[i] = if (this.isNumeric(splitted[i])) splitted[i] else "0"
         }
 
@@ -26,7 +34,7 @@ class VersionManager {
             result[i] = "0"
         }
 
-        this.versions.add(java.lang.String.join(".", *result))
+        this.versions.add(result.joinToString("."))
     }
 
     fun rollback(): VersionManager {
@@ -84,5 +92,10 @@ class VersionManager {
         }
 
         return ""
+    }
+
+    fun reset() {
+        this.versions.clear()
+        this.versions.add(this.initialVersion)
     }
 }
