@@ -8,7 +8,7 @@ class VersionManager {
     private val versions: MutableList<String> = ArrayList()
 
     constructor() {
-        versions.add("0.0.1")
+        this.versions.add("0.0.1")
     }
 
     constructor(version: String) {
@@ -26,12 +26,12 @@ class VersionManager {
             result[i] = "0"
         }
 
-        versions.add(java.lang.String.join(".", *result))
+        this.versions.add(java.lang.String.join(".", *result))
     }
 
     fun rollback(): VersionManager {
-        if (versions.isNotEmpty()) {
-            versions.removeLast()
+        if (this.versions.isNotEmpty()) {
+            this.versions.removeLast()
         } else {
             println("Cannot rollback!")
         }
@@ -52,21 +52,21 @@ class VersionManager {
             splitted[i] = "0"
         }
 
-        versions.add(splitted.joinToString("."))
+        this.versions.add(splitted.joinToString("."))
     }
 
     fun major(): VersionManager {
-        genericUpdate(0)
+        this.genericUpdate(0)
         return this
     }
 
     fun minor(): VersionManager {
-        genericUpdate(1)
+        this.genericUpdate(1)
         return this
     }
 
     fun patch(): VersionManager {
-        genericUpdate(2)
+        this.genericUpdate(2)
         return this
     }
 
@@ -79,8 +79,8 @@ class VersionManager {
     }
 
     fun release(): String {
-        if (versions.isNotEmpty()) {
-            return versions.last()
+        if (this.versions.isNotEmpty()) {
+            return this.versions.last()
         }
 
         return ""
